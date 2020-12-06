@@ -1,4 +1,6 @@
 # Creates a nicely-formatted CSV from Venmo statement downloads for import into GnuCash
+#
+# To run, change to this directory and run: python3 venmo-gnucash-formatter.py
 
 import csv
 from datetime import datetime
