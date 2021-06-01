@@ -1,13 +1,20 @@
 # Creates a nicely-formatted CSV from Venmo statement downloads for import into GnuCash
 #
-# To run, change to this directory and run: python3 venmo-gnucash-formatter.py
+# To run (change to this directory):
+# python3 venmo-gnucash-formatter.py -d ~/Downloads
 
+import argparse
 import csv
 from datetime import datetime
 
-# Adjust as needed.
-inputPath = '/home/jay/Downloads/venmo_statement.csv'
-outputPath = '/home/jay/Downloads/venmo_gnucash.csv'
+all_args = argparse.ArgumentParser()
+all_args.add_argument("-d", "--directory", required=True,
+   help="The directory that contains the 'venmo_statement.csv' file.")
+args = vars(all_args.parse_args())
+
+directory = str(args["directory"])
+inputPath = directory + '/venmo_statement.csv'
+outputPath = directory + '/venmo_gnucash.csv'
 
 
 inputFile = open(inputPath)
@@ -30,8 +37,12 @@ for row in input:
     deposit = ''
     if amountStr.startswith('- $'):
       withdrawl = amountStr[3:]
+    elif amountStr.startswith('-$'):
+      withdrawl = amountStr[2:]
     elif amountStr.startswith('+ $'):
       deposit = amountStr[3:]
+    elif amountStr.startswith('$'):
+      deposit = amountStr[1:]
 
     output.writerow([date, description, withdrawl, deposit])
   
