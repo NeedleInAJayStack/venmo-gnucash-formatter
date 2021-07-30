@@ -28,10 +28,10 @@ for row in input:
     amountStr = row['Amount (total)']
     withdrawl = ''
     deposit = ''
-    if amountStr.startswith('- $'):
-      withdrawl = amountStr[3:]
-    elif amountStr.startswith('+ $'):
-      deposit = amountStr[3:]
+    if amountStr.startswith('-'):
+      withdrawl = amountStr[1:]
+    else:
+      deposit = amountStr
 
     output.writerow([date, description, withdrawl, deposit])
   
