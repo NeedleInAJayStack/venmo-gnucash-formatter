@@ -13,7 +13,7 @@ all_args.add_argument("-d", "--directory", required=True,
 args = vars(all_args.parse_args())
 
 directory = str(args["directory"])
-inputPath = directory + '/venmo_statement.csv'
+inputPath = directory + '/transaction_history.csv'
 outputPath = directory + '/venmo_gnucash.csv'
 
 
