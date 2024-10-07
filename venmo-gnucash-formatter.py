@@ -1,3 +1,5 @@
+#! /usr/bin/python3
+
 # Creates a nicely-formatted CSV from Venmo statement downloads for import into GnuCash
 #
 # To run (change to this directory):
