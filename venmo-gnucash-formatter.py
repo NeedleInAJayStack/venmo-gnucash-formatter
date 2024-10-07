@@ -8,13 +8,14 @@ import csv
 from datetime import datetime
 
 all_args = argparse.ArgumentParser()
-all_args.add_argument("-d", "--directory", required=True,
-   help="The directory that contains the 'venmo_statement.csv' file.")
+all_args.add_argument("-f", "--file", required=True,
+   help="The path of the input csv file.")
+all_args.add_argument("-o", "--output", required=True,
+   help="The path of the output csv file.")
 args = vars(all_args.parse_args())
 
-directory = str(args["directory"])
-inputPath = directory + '/transaction_history.csv'
-outputPath = directory + '/venmo_gnucash.csv'
+inputPath = str(args["file"])
+outputPath = str(args["output"])
 
 
 inputFile = open(inputPath)
