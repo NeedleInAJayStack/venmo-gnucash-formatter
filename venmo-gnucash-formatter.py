@@ -23,6 +23,8 @@ outputPath = str(args["output"])
 inputFile = open(inputPath)
 outputFile = open(outputPath, 'w')
 
+next(inputFile)  # Skip "Account Statement" line
+next(inputFile)  # Skip "Account Activity" line
 input = csv.DictReader(inputFile)
 output = csv.writer(outputFile)
 output.writerow(['Date', 'Description', 'Withdrawl', 'Deposit'])
