@@ -30,14 +30,22 @@ output = csv.writer(outputFile)
 output.writerow(['Date', 'Description', 'Withdrawl', 'Deposit'])
 
 for row in input:
-  impactsVenmoBalance = row['Funding Source'] == 'Venmo balance' or row['Destination'] == 'Venmo balance'
+  datetimeStr = row['Datetime']
+  description = row['Note']
+  amountStr = row['Amount (total)']
+  fundingSource = row['Funding Source'] 
+  destination = row['Destination']
 
-  if impactsVenmoBalance :
-    date = datetime.fromisoformat(row['Datetime']).date().isoformat()
+  # File sometimes contains empty spacing lines. Detect these by a missing datetime.
+  if datetimeStr == '':
+    continue
 
-    description = row['Note']
+  if fundingSource == '' and destination == '':
+    raise Exception(f"Transaction '{description}' source and destination are blank. Repair in file.")
 
-    amountStr = row['Amount (total)']
+  if fundingSource == 'Venmo balance' or destination == 'Venmo balance':
+    date = datetime.fromisoformat(datetimeStr).date().isoformat()
+
     withdrawl = ''
     deposit = ''
     if amountStr.startswith('- $'):
