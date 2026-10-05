@@ -33,17 +33,14 @@ for row in input:
   datetimeStr = row['Datetime']
   description = row['Note']
   amountStr = row['Amount (total)']
-  fundingSource = row['Funding Source'] 
+  fundingSource = row['Funding Source']
   destination = row['Destination']
 
   # File sometimes contains empty spacing lines. Detect these by a missing datetime.
   if datetimeStr == '':
     continue
 
-  if fundingSource == '' and destination == '':
-    raise Exception(f"Transaction '{description}' source and destination are blank. Repair in file.")
-
-  if fundingSource == 'Venmo balance' or destination == 'Venmo balance':
+  if (fundingSource == '' and destination == '') or fundingSource == 'Venmo balance' or destination == 'Venmo balance':
     date = datetime.fromisoformat(datetimeStr).date().isoformat()
 
     withdrawl = ''
@@ -62,5 +59,3 @@ for row in input:
       deposit = amountStr
 
     output.writerow([date, description, withdrawl, deposit])
-  
-
